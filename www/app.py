@@ -101,10 +101,12 @@ async def response_factory(app, handler):
         resp = web.Response(body=str(r).encode('utf-8'))
         resp.content_type = 'text/plain;charset=utf-8'
         return resp
+
     return response
 
+
 def datetime_filter(t):
-    delta = int(time.time() - t)
+    delta = int(time.time() - float(t))
 
     if delta < 60:
         return u'1分钟前'
@@ -119,11 +121,12 @@ def datetime_filter(t):
         return u'%s天前' % (delta // 86400)
 
     dt = datetime.fromtimestamp(t)
-    return u'%年%月%日' % (dt.year, dt.month, dt.day)
+    return u'%s年%s月%s日' % (dt.year, dt.month, dt.day)
 
 
 async def init(loop):
-    await www.orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='www-data', password='www-data', db='awesome')
+    await www.orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='www-data', password='www-data',
+                              db='awesome')
     app = web.Application(loop=loop, middlewares=[
         logger_factory, response_factory
     ])
