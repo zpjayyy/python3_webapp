@@ -66,6 +66,9 @@ async def response_factory(app, handler):
         logging.info('Response handler...')
         r = await handler(request)
 
+        if isinstance(r, web.StreamResponse):
+            return r
+
         if isinstance(r, bytes):
             resp = web.Response(body=r)
             resp.content_type = 'application/octet-stream'
@@ -90,8 +93,8 @@ async def response_factory(app, handler):
                 resp.content_type = 'text/html;charset=utf-8'
                 return resp
 
-        if isinstance(r, int) and r >= 100 and r < 600:
-            return web.Response(r)
+        if isinstance(r, int) and t >= 100 and t < 600:
+            return web.Response(t)
 
         if isinstance(r, tuple) and len(r) == 2:
             t, m = r
