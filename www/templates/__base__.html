@@ -13,7 +13,6 @@
     <script src="/static/js/components/sticky.min.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/awesome.js"></script>
-    <!--<script src="/static/js/awesome.js"></script>-->
     {% block beforehead %}<!-- before head -->{% endblock %}
 </head>
 <body>
@@ -27,7 +26,7 @@
             </ul>
             <div class="uk-navbar-flip">
                 <ul class="uk-navbar-nav">
-                    {% if __usr__ %}
+                    {% if __user__ %}
                     <li class="uk-parent" data-uk-dropdown>
                         <a href="#0"><i class="uk-icon-user"> {{ __user__.name }}</i></a>
                         <div class="uk-dropdown uk-dropdown-navbar">
